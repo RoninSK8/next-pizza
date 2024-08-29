@@ -2,6 +2,7 @@ import {
 	Categories,
 	Container,
 	Filters,
+	ProductCard,
 	SortPopup,
 	Title,
 	TopBar,
@@ -22,7 +23,14 @@ export default function Home() {
 					</div>
 					{/* Список товаров */}
 					<div className="flex-1">
-						<div className="flex flex-col gap-16">Список товаров</div>
+						<div className="flex flex-col gap-16">
+							<ProductCard
+								id={0}
+								name="Чизбургер пицца"
+								imageUrl="https://media.dodostatic.net/image/r:584x584/11EE7D61698827EE9B8DB6D0AEC53410.avif"
+								price={550}
+							/>
+						</div>
 					</div>
 				</div>
 			</Container>
