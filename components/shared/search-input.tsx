@@ -42,8 +42,18 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
 						focused && 'visible opacity-100 top-12'
 					)}
 				>
-					<Link href="/product/1">
-						<div className="px-3 py-2 hover:bg-primary/10"></div>
+					<Link
+						href="/product/1"
+						className="flex items-center gap-3 w-full px-3 py-2 hover:bg-primary/10"
+					>
+						<img
+							className="rounded-sm h-8 w-8"
+							src="https://media.dodostatic.net/image/r:584x584/11EE7D610D2925109AB2E1C92CC5383C.avif"
+							alt="Пицца 1"
+							width={32}
+							height={32}
+						/>
+						<span className="">Пицца 1</span>
 					</Link>
 				</div>
 			</div>
