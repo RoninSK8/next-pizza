@@ -9,7 +9,7 @@ import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useFilterIngredients } from '@/app/hooks/useFilterIngredients';
 import { useSet } from 'react-use';
 import qs from 'qs';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Props {
 	className?: string;
@@ -20,17 +20,32 @@ interface PriceProps {
 	priceTo?: number;
 }
 
+interface QueryFilters extends PriceProps {
+	pizzaTypes: string;
+	sizes: string;
+	ingredients: string;
+}
+
 export const Filters: React.FC<Props> = ({ className }) => {
 	const router = useRouter();
+	const searchParams = useSearchParams() as unknown as Map<
+		keyof QueryFilters,
+		string
+	>;
 	const { ingredients, loading, onAddId, selectedIngredients } =
 		useFilterIngredients();
 
-	const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
+	const [sizes, { toggle: toggleSizes }] = useSet(
+		new Set<string>(searchParams.get('sizes')?.split(',') || [])
+	);
 	const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(
-		new Set<string>([])
+		new Set<string>(searchParams.get('pizzaTypes')?.split(',') || [])
 	);
 
-	const [prices, setPrices] = React.useState<PriceProps>({});
+	const [prices, setPrices] = React.useState<PriceProps>({
+		priceFrom: Number(searchParams.get('priceFrom')) || undefined,
+		priceTo: Number(searchParams.get('priceTo')) || undefined,
+	});
 	const items = ingredients.map((ingredient) => ({
 		value: String(ingredient.id),
 		text: ingredient.name,
@@ -52,7 +67,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
 			arrayFormat: 'comma',
 		});
 
-		router.push(`?${query}`);
+		router.push(`?${query}`, { scroll: false });
 	}, [prices, sizes, pizzaTypes, selectedIngredients, router]);
 
 	return (
@@ -100,7 +115,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
 						min={100}
 						max={1000}
 						placeholder="1000"
-						value={String(prices.priceFrom) || '1000'}
+						value={String(prices.priceTo) || '1000'}
 						onChange={(e) => updatePrice('priceTo', Number(e.target.value))}
 					/>
 				</div>
