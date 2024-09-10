@@ -2,7 +2,7 @@ import {
 	ChooseProductModal,
 	Container,
 	GroupVariants,
-	ProductImage,
+	PizzaImage,
 	Title,
 } from '@/components/shared';
 import { prisma } from '@/prisma/prisma-client';
