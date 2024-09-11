@@ -1,5 +1,5 @@
 import { GroupVariants } from './group-variants';
-import { PizzaImage } from '@/components/shared/pizza-image';
+import { PizzaImage } from '@/shared/components/shared/pizza-image';
 export { Container } from './container';
 export { Header } from './header';
 export { Title } from './title';
