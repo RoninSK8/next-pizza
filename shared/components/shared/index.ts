@@ -1,3 +1,4 @@
+import { Ingredient } from '@prisma/client';
 import { GroupVariants } from './group-variants';
 import { PizzaImage } from '@/shared/components/shared/pizza-image';
 export { Container } from './container';
@@ -16,6 +17,7 @@ export { SearchInput } from './search-input';
 export { PizzaImage } from './pizza-image';
 export { GroupVariants } from './group-variants';
 export { ChooseProductForm } from './choose-product-form';
-import { ChoosePizzaForm } from './choose-pizza-form';
+export { ChoosePizzaForm } from './choose-pizza-form';
+export { IngredientItem } from './ingredient-item';
 
 export * from './modals';
