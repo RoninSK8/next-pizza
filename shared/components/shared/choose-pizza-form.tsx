@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 import { cn } from '@/shared/lib/utils';
 import { Title } from './title';
 import { Button } from '../ui';
@@ -73,6 +74,16 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 			),
 		};
 	});
+
+	useEffect(() => {
+		const isAvailableSize = availablePizzaSizes?.find(
+			(item) => Number(item.value) === size && !item.disabled
+		);
+		const availableSize = availablePizzaSizes?.find((item) => !item.disabled);
+		if (!isAvailableSize && availableSize) {
+			setSize(Number(availableSize.value) as PizzaSize);
+		}
+	}, [availablePizzaSizes, size]);
 
 	return (
 		<div className={cn(className, 'flex flex-1')}>
