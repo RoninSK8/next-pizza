@@ -63,7 +63,17 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 		});
 	};
 
-	console.log(ingredients);
+	const availablePizzas = items.filter((item) => item.pizzaType === type);
+	const availablePizzaSizes = pizzaSizes.map((item) => {
+		return {
+			name: item.name,
+			value: item.value,
+			disabled: !availablePizzas.some(
+				(pizza) => pizza.size === Number(item.value)
+			),
+		};
+	});
+
 	return (
 		<div className={cn(className, 'flex flex-1')}>
 			<PizzaImage imageUrl={imageUrl} size={size} />
@@ -73,7 +83,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 				<p className="text-gray-400">{textDetails}</p>
 				<div className="flex flex-col gap-3 mt-5">
 					<GroupVariants
-						items={pizzaSizes}
+						items={availablePizzaSizes}
 						value={String(size)}
 						onClick={(value) => setSize(Number(value) as PizzaSize)}
 					/>
