@@ -15,7 +15,7 @@ import {
 import { Ingredient, ProductItem } from '@prisma/client';
 import { IngredientItem } from './ingredient-item';
 import { useSet } from 'react-use';
-import { ProductWithRelations } from '@/@types/prisma';
+import { calcTotalPizzaPrice } from '@/shared/lib';
 
 interface Props {
 	className?: string;
@@ -41,18 +41,13 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 		new Set<number>([])
 	);
 
-	const pizzaPrice =
-		items.find((item) => item.pizzaType === type && item.size === size)
-			?.price || 0;
-
-	const totalIngredientsPrice = ingredients
-		.filter((ingredient) => selectedIngredients.has(ingredient.id))
-		.reduce((acc, ingredient) => {
-			return acc + ingredient.price;
-		}, 0);
-
-	const totalPrice = pizzaPrice + totalIngredientsPrice;
-
+	const totalPrice = calcTotalPizzaPrice(
+		items,
+		size,
+		type,
+		ingredients,
+		selectedIngredients
+	);
 	const textDetails = `${size} см, ${mapPizzaType[type]} пицца`;
 
 	const handleClickAdd = () => {
@@ -64,12 +59,12 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 		});
 	};
 
-	const availablePizzas = items.filter((item) => item.pizzaType === type);
+	const filteredPizzasByType = items.filter((item) => item.pizzaType === type);
 	const availablePizzaSizes = pizzaSizes.map((item) => {
 		return {
 			name: item.name,
 			value: item.value,
-			disabled: !availablePizzas.some(
+			disabled: !filteredPizzasByType.some(
 				(pizza) => pizza.size === Number(item.value)
 			),
 		};
