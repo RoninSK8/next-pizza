@@ -1,3 +1,4 @@
+'use client';
 import {
 	Sheet,
 	SheetContent,
@@ -13,6 +14,8 @@ import { cn } from '@/shared/lib/utils';
 import Link from 'next/link';
 import { Button } from '../ui';
 import { ArrowRight } from 'lucide-react';
+import { CartDrawerItem } from './cart-drawer-item';
+import { getCartItemDetails } from '@/shared/lib';
 
 interface Props {
 	className?: string;
@@ -31,7 +34,37 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
 						В корзине <span className="font-bold">3 товара</span>
 					</SheetTitle>
 				</SheetHeader>
-				{/* Items */}
+				<div className="-mx-6 mt-5 overflow-auto flex-1 scrollbar">
+					<div className="mb-2">
+						<CartDrawerItem
+							id={1}
+							details={getCartItemDetails(2, 30, [
+								{
+									name: 'Сыр',
+									id: 0,
+									price: 0,
+									imageUrl: '',
+									createdAt: new Date(),
+									updatedAt: new Date(),
+								},
+								{
+									name: 'Цыпленок',
+									id: 0,
+									price: 0,
+									imageUrl: '',
+									createdAt: new Date(),
+									updatedAt: new Date(),
+								},
+							])}
+							imageUrl={
+								'https://media.dodostatic.net/image/r:584x584/11EE7D610D2925109AB2E1C92CC5383C.avif'
+							}
+							name={'Чоризо фреш'}
+							price={419}
+							quantity={1}
+						/>
+					</div>
+				</div>
 				<SheetFooter className="-m-6 bg-white p-8">
 					<div className="w-full">
 						<div className="flex mb-4">
