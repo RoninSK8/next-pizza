@@ -9,6 +9,7 @@ import { ChooseProductForm } from '../choose-product-form';
 import { ProductWithRelations } from '@/@types/prisma';
 import { ChoosePizzaForm } from '../choose-pizza-form';
 import { useCartStore } from '@/shared/store';
+import toast from 'react-hot-toast';
 
 interface Props {
 	product: ProductWithRelations;
@@ -21,16 +22,28 @@ export const ChooseProductModal: React.FC<Props> = ({ className, product }) => {
 	const isPizzaForm = Boolean(firstItem.pizzaType);
 	const addCartItem = useCartStore((state) => state.addCartItem);
 
-	const onAddProduct = () => {
-		addCartItem({
-			productItemId: firstItem.id,
-		});
+	const onAddProduct = async () => {
+		try {
+			await addCartItem({
+				productItemId: firstItem.id,
+			});
+			toast.success('Продукт добавлен в корзину');
+		} catch (error) {
+			toast.error('Произошла ошибка при добавлении в корзину');
+			console.log(error);
+		}
 	};
-	const onAddPizza = (productItemId: number, ingredients: number[]) => {
-		addCartItem({
-			productItemId,
-			ingredients,
-		});
+	const onAddPizza = async (productItemId: number, ingredients: number[]) => {
+		try {
+			await addCartItem({
+				productItemId,
+				ingredients,
+			});
+			toast.success('Пицца добавлена в корзину');
+		} catch (error) {
+			toast.error('Произошла ошибка при добавлении в корзину');
+			console.log(error);
+		}
 	};
 
 	return (
