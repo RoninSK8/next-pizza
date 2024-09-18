@@ -20,26 +20,17 @@ export const ChooseProductModal: React.FC<Props> = ({ className, product }) => {
 	const router = useRouter();
 	const firstItem = product.items[0];
 	const isPizzaForm = Boolean(firstItem.pizzaType);
-	const addCartItem = useCartStore((state) => state.addCartItem);
+	const [addCartItem, loading] = useCartStore((state) => [
+		state.addCartItem,
+		state.loading,
+	]);
 
-	const onAddProduct = async () => {
+	const onSubmit = async (productItemId?: number, ingredients?: number[]) => {
 		try {
-			await addCartItem({
-				productItemId: firstItem.id,
-			});
+			const itemId = productItemId ?? firstItem.id;
+			await addCartItem({ productItemId: itemId, ingredients });
 			toast.success('Продукт добавлен в корзину');
-		} catch (error) {
-			toast.error('Произошла ошибка при добавлении в корзину');
-			console.log(error);
-		}
-	};
-	const onAddPizza = async (productItemId: number, ingredients: number[]) => {
-		try {
-			await addCartItem({
-				productItemId,
-				ingredients,
-			});
-			toast.success('Пицца добавлена в корзину');
+			router.back();
 		} catch (error) {
 			toast.error('Произошла ошибка при добавлении в корзину');
 			console.log(error);
@@ -60,14 +51,16 @@ export const ChooseProductModal: React.FC<Props> = ({ className, product }) => {
 						name={product.name}
 						ingredients={product.ingredients}
 						items={product.items}
-						onSubmit={onAddPizza}
+						onSubmit={onSubmit}
+						loading={loading}
 					/>
 				) : (
 					<ChooseProductForm
 						imageUrl={product.imageUrl}
 						name={product.name}
 						price={firstItem.price}
-						onSubmit={onAddProduct}
+						onSubmit={onSubmit}
+						loading={loading}
 					/>
 				)}
 			</DialogContent>
