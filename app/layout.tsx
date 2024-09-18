@@ -19,8 +19,10 @@ export default function RootLayout({
 			<head>
 				<link data-rh="true" rel="icon" href="/logo.png" />
 			</head>
-			<Toaster />
-			<body className={nunito.className}>{children}</body>
+			<body className={nunito.className}>
+				<Toaster />
+				{children}
+			</body>
 		</html>
 	);
 }
