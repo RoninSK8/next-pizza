@@ -3,6 +3,8 @@ import React from 'react';
 import { Title } from './title';
 import { Button } from '../ui';
 import { Plus } from 'lucide-react';
+import { Ingredient } from '@prisma/client';
+import { capitalizeLowercaseText } from '@/shared/lib/capitalize-lowercase-text';
 
 interface Props {
 	id: number;
@@ -10,6 +12,7 @@ interface Props {
 	imageUrl: string;
 	price: number;
 	className?: string;
+	ingredients?: Ingredient[];
 }
 
 export const ProductCard: React.FC<Props> = ({
@@ -18,6 +21,7 @@ export const ProductCard: React.FC<Props> = ({
 	id,
 	name,
 	price,
+	ingredients,
 }) => {
 	return (
 		<div className={className}>
@@ -27,8 +31,9 @@ export const ProductCard: React.FC<Props> = ({
 				</div>
 				<Title text={name} size="sm" className="mb-1 mt-3 font-bold" />
 				<p className="text-sm text-gray-400">
-					Цыплёнок, сыры чеддер и пармезан, сырный соус, томаты, соус альфредо,
-					чеснок
+					{capitalizeLowercaseText(
+						ingredients?.map((ingredient) => ingredient.name).join(', ')
+					)}
 				</p>
 				<div className="flex justify-between items-center mt-4">
 					<span className="text-[20px]">
