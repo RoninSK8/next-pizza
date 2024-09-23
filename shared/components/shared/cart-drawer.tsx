@@ -77,6 +77,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
 										  )
 										: ''
 								}
+								disabled={item.disabled}
 								imageUrl={item.imageUrl}
 								name={item.name}
 								price={item.price}
