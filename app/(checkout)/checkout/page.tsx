@@ -20,14 +20,24 @@ export default function CheckoutPage() {
 				{/* Левая часть */}
 				<div className="flex flex-col gap-10 flex-1 mb-20">
 					<WhiteBlock title="1. Корзина">
-						<CheckoutItem
-							id={0}
-							details={''}
-							imageUrl={''}
-							name={''}
-							price={0}
-							quantity={0}
-						/>
+						<div className="flex flex-col gap-5">
+							<CheckoutItem
+								id={0}
+								details={''}
+								imageUrl={''}
+								name={''}
+								price={0}
+								quantity={0}
+							/>
+							<CheckoutItem
+								id={0}
+								details={''}
+								imageUrl={''}
+								name={''}
+								price={0}
+								quantity={0}
+							/>
+						</div>
 					</WhiteBlock>
 					<WhiteBlock title="2. Персональные данные">
 						<div className="grid grid-cols-2 gap-5">
