@@ -9,43 +9,20 @@ import {
 	SheetTrigger,
 } from '@/shared/components/ui/sheet';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { cn } from '@/shared/lib/utils';
 import Link from 'next/link';
 import { Button } from '../ui';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { CartDrawerItem } from './cart-drawer-item';
 import { getCartItemDetails } from '@/shared/lib';
-import { useCartStore } from '@/shared/store';
 import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
 import Image from 'next/image';
 import { Title } from './title';
+import { useCart } from '@/shared/hooks';
 
-interface Props {
-	className?: string;
-}
-
-export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
-	children,
-	className,
-}) => {
-	const [
-		totalAmount,
-		fetchCartItems,
-		items,
-		updateItemQuantity,
-		removeCartItem,
-	] = useCartStore((state) => [
-		state.totalAmount,
-		state.fetchCartItems,
-		state.items,
-		state.updateItemQuantity,
-		state.removeCartItem,
-	]);
-
-	useEffect(() => {
-		fetchCartItems();
-	}, [fetchCartItems]);
+export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
+	const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
 
 	const onClickCountButton = (
 		id: number,
