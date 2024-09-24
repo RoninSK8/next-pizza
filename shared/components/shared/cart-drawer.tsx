@@ -22,6 +22,8 @@ import { Title } from './title';
 import { useCart } from '@/shared/hooks';
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
+	const [redirectingToCheckout, setRedirectingToCheckout] =
+		React.useState(false);
 	const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
 
 	const onClickCountButton = (
@@ -116,8 +118,13 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
 										<span className="font-bold text-lg">{totalAmount} ₽</span>
 									</div>
 
-									<Link href="/cart">
-										<Button type="submit" className="w-full h-12 text-base">
+									<Link href="/checkout">
+										<Button
+											onClick={() => setRedirectingToCheckout(true)}
+											loading={redirectingToCheckout}
+											type="submit"
+											className="w-full h-12 text-base"
+										>
 											Оформить заказ
 											<ArrowRight className="w-5 ml-2" />
 										</Button>

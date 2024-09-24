@@ -1,3 +1,4 @@
+'use client';
 import {
 	CheckoutItem,
 	CheckoutItemDetails,
@@ -6,9 +7,22 @@ import {
 	WhiteBlock,
 } from '@/shared/components/shared';
 import { Button, Input, Textarea } from '@/shared/components/ui';
+import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
+import { useCart } from '@/shared/hooks';
+import { getCartItemDetails } from '@/shared/lib';
 import { ArrowRight, Package, Percent, Truck } from 'lucide-react';
 
 export default function CheckoutPage() {
+	const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
+
+	const onClickCountButton = (
+		id: number,
+		quantity: number,
+		type: 'plus' | 'minus'
+	) => {
+		const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
+		updateItemQuantity(id, newQuantity);
+	};
 	return (
 		<Container>
 			<Title
@@ -21,22 +35,30 @@ export default function CheckoutPage() {
 				<div className="flex flex-col gap-10 flex-1 mb-20">
 					<WhiteBlock title="1. Корзина">
 						<div className="flex flex-col gap-5">
-							<CheckoutItem
-								id={0}
-								details={''}
-								imageUrl={''}
-								name={''}
-								price={0}
-								quantity={0}
-							/>
-							<CheckoutItem
-								id={0}
-								details={''}
-								imageUrl={''}
-								name={''}
-								price={0}
-								quantity={0}
-							/>
+							{items.map((item) => (
+								<CheckoutItem
+									key={item.id}
+									id={item.id}
+									disabled={item.disabled}
+									details={
+										item.pizzaSize && item.pizzaType
+											? getCartItemDetails(
+													item.ingredients,
+													item.pizzaType as PizzaType,
+													item.pizzaSize as PizzaSize
+											  )
+											: ''
+									}
+									imageUrl={item.imageUrl}
+									name={item.name}
+									price={item.price}
+									quantity={item.quantity}
+									onClickCountButton={(type) =>
+										onClickCountButton(item.id, item.quantity, type)
+									}
+									onClickRemoveButton={() => removeCartItem(item.id)}
+								/>
+							))}
 						</div>
 					</WhiteBlock>
 					<WhiteBlock title="2. Персональные данные">
