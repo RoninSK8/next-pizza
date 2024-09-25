@@ -7,6 +7,7 @@ import {
 	Title,
 	WhiteBlock,
 } from '@/shared/components/shared';
+import { FormInput } from '@/shared/components/shared/form-components';
 import { Button, Input, Textarea } from '@/shared/components/ui';
 import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
 import { useCart } from '@/shared/hooks';
@@ -71,7 +72,11 @@ export default function CheckoutPage() {
 								className="text-base"
 							/>
 							<Input name="email" placeholder="E-mail" className="text-base" />
-							<Input name="phone" placeholder="Телефон" className="text-base" />
+							<FormInput
+								name="phone"
+								placeholder="Телефон"
+								className="text-base"
+							/>
 						</div>
 					</WhiteBlock>
 					<WhiteBlock title="3. Адрес доставки">
