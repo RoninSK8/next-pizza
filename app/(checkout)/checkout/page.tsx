@@ -1,21 +1,30 @@
 'use client';
 import {
-	CheckoutItem,
-	CheckoutItemDetails,
+	CheckoutAddressForm,
+	CheckoutCart,
+	CheckoutPersonalInfo,
 	CheckoutSidebar,
 	Container,
 	Title,
-	WhiteBlock,
 } from '@/shared/components/shared';
-import { FormInput } from '@/shared/components/shared/form-components';
-import { Button, Input, Textarea } from '@/shared/components/ui';
-import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useCart } from '@/shared/hooks';
-import { getCartItemDetails } from '@/shared/lib';
-import { ArrowRight, Package, Percent, Truck } from 'lucide-react';
 
 export default function CheckoutPage() {
 	const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
+
+	const form = useForm({
+		resolver: zodResolver(),
+		defaultValues: {
+			email: '',
+			firstName: '',
+			lastName: '',
+			phone: '',
+			address: '',
+			comment: '',
+		},
+	});
 
 	const onClickCountButton = (
 		id: number,
@@ -35,65 +44,13 @@ export default function CheckoutPage() {
 			<div className="flex gap-10">
 				{/* Левая часть */}
 				<div className="flex flex-col gap-10 flex-1 mb-20">
-					<WhiteBlock title="1. Корзина">
-						<div className="flex flex-col gap-5">
-							{items.map((item) => (
-								<CheckoutItem
-									key={item.id}
-									id={item.id}
-									disabled={item.disabled}
-									details={
-										item.pizzaSize && item.pizzaType
-											? getCartItemDetails(
-													item.ingredients,
-													item.pizzaType as PizzaType,
-													item.pizzaSize as PizzaSize
-											  )
-											: ''
-									}
-									imageUrl={item.imageUrl}
-									name={item.name}
-									price={item.price}
-									quantity={item.quantity}
-									onClickCountButton={(type) =>
-										onClickCountButton(item.id, item.quantity, type)
-									}
-									onClickRemoveButton={() => removeCartItem(item.id)}
-								/>
-							))}
-						</div>
-					</WhiteBlock>
-					<WhiteBlock title="2. Персональные данные">
-						<div className="grid grid-cols-2 gap-5">
-							<Input name="fistName" placeholder="Имя" className="text-base" />
-							<Input
-								name="lastName"
-								placeholder="Фамилия"
-								className="text-base"
-							/>
-							<Input name="email" placeholder="E-mail" className="text-base" />
-							<FormInput
-								name="phone"
-								placeholder="Телефон"
-								className="text-base"
-							/>
-						</div>
-					</WhiteBlock>
-					<WhiteBlock title="3. Адрес доставки">
-						<div className="flex flex-col gap-5">
-							<Input
-								name="address"
-								placeholder="Введите адрес..."
-								className="text-base"
-							/>
-
-							<Textarea
-								rows={5}
-								className="text-base"
-								placeholder="Комментарии к заказу"
-							/>
-						</div>
-					</WhiteBlock>
+					<CheckoutCart
+						items={items}
+						onClickCountButton={onClickCountButton}
+						removeCartItem={removeCartItem}
+					/>
+					<CheckoutPersonalInfo />
+					<CheckoutAddressForm />
 				</div>
 
 				{/* Правая часть */}
