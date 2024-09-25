@@ -2,20 +2,22 @@
 import {
 	CheckoutAddressForm,
 	CheckoutCart,
+	checkoutFormSchema,
 	CheckoutPersonalInfo,
 	CheckoutSidebar,
 	Container,
 	Title,
 } from '@/shared/components/shared';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCart } from '@/shared/hooks';
+import { CheckoutFormValues } from '@/shared/components/shared/checkout/checkout-form-schema';
 
 export default function CheckoutPage() {
 	const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
 
-	const form = useForm({
-		resolver: zodResolver(),
+	const form = useForm<CheckoutFormValues>({
+		resolver: zodResolver(checkoutFormSchema),
 		defaultValues: {
 			email: '',
 			firstName: '',
@@ -25,6 +27,10 @@ export default function CheckoutPage() {
 			comment: '',
 		},
 	});
+
+	const onSubmit = (data: CheckoutFormValues) => {
+		console.log(data);
+	};
 
 	const onClickCountButton = (
 		id: number,
@@ -40,24 +46,27 @@ export default function CheckoutPage() {
 				text="Оформление заказа"
 				className="font-extrabold mb-8 text-[36px]"
 			/>
+			<FormProvider {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)}>
+					<div className="flex gap-10">
+						{/* Левая часть */}
+						<div className="flex flex-col gap-10 flex-1 mb-20">
+							<CheckoutCart
+								items={items}
+								onClickCountButton={onClickCountButton}
+								removeCartItem={removeCartItem}
+							/>
+							<CheckoutPersonalInfo />
+							<CheckoutAddressForm />
+						</div>
 
-			<div className="flex gap-10">
-				{/* Левая часть */}
-				<div className="flex flex-col gap-10 flex-1 mb-20">
-					<CheckoutCart
-						items={items}
-						onClickCountButton={onClickCountButton}
-						removeCartItem={removeCartItem}
-					/>
-					<CheckoutPersonalInfo />
-					<CheckoutAddressForm />
-				</div>
-
-				{/* Правая часть */}
-				<div className="w-[450px]">
-					<CheckoutSidebar totalAmount={totalAmount} />
-				</div>
-			</div>
+						{/* Правая часть */}
+						<div className="w-[450px]">
+							<CheckoutSidebar totalAmount={totalAmount} />
+						</div>
+					</div>
+				</form>
+			</FormProvider>
 		</Container>
 	);
 }
