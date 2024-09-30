@@ -13,6 +13,7 @@ import {
 import { checkoutFormSchema, CheckoutFormValues } from '@/shared/constants';
 import { useCart } from '@/shared/hooks';
 import { cn } from '@/shared/lib/utils';
+import { createOrder } from '@/app/actions';
 
 export default function CheckoutPage() {
 	const { totalAmount, items, updateItemQuantity, removeCartItem, loading } =
@@ -32,6 +33,7 @@ export default function CheckoutPage() {
 
 	const onSubmit = (data: CheckoutFormValues) => {
 		console.log(data);
+		createOrder(data);
 	};
 
 	const onClickCountButton = (
