@@ -1,6 +1,7 @@
+'use client';
 import React from 'react';
 import { AddressInput, ErrorText, FormTextarea, WhiteBlock } from '..';
-import { Input } from '../../ui';
+
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
