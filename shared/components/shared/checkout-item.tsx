@@ -48,7 +48,7 @@ export const CheckoutItem: React.FC<Props> = ({
 					onClick={onClickCountButton}
 					value={quantity}
 				/>
-				<button onClick={onClickRemoveButton}>
+				<button type="button" onClick={onClickRemoveButton}>
 					<X
 						className="text-gray-400 cursor-pointer hover:text-gray-600"
 						size={20}
