@@ -76,6 +76,16 @@ export async function createOrder(data: CheckoutFormValues) {
 		});
 
 		// TODO: сделать создание ссылки оплаты
+
+		await sendEmail(
+			data.email,
+			'Next Pizza / Оплатите заказ №' + order.id,
+			PayOrderTemplate({
+				orderId: order.id,
+				totalAmount: order.totalAmount,
+				paymentUrl: 'https://www.youtube.com/',
+			})
+		);
 	} catch (error) {
 		console.log('[ORDER_CREATE] Server error', error);
 	}

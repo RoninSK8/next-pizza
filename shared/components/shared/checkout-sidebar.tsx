@@ -27,7 +27,9 @@ export const CheckoutSidebar: React.FC<Props> = ({
 				{loading ? (
 					<Skeleton className="h-11 w-48" />
 				) : (
-					<span className="h-11 text-[34px] font-extrabold">{totalPrice} ₽</span>
+					<span className="h-11 text-[34px] font-extrabold">
+						{totalPrice} ₽
+					</span>
 				)}
 			</div>
 			<CheckoutItemDetails
@@ -76,6 +78,7 @@ export const CheckoutSidebar: React.FC<Props> = ({
 				}
 			/>
 			<Button
+				loading={loading}
 				type="submit"
 				className="w-full h-14 rounded-2xl mt-6 text-base font-bold"
 			>
