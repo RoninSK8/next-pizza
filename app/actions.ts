@@ -2,7 +2,7 @@
 import { prisma } from '@/prisma/prisma-client';
 import { PayOrderTemplate } from '@/shared/components/shared';
 import { CheckoutFormValues } from '@/shared/constants';
-import { sendEmail } from '@/shared/lib';
+import { createPayment, sendEmail } from '@/shared/lib';
 import { OrderStatus } from '@prisma/client';
 import { cookies } from 'next/headers';
 
@@ -75,7 +75,30 @@ export async function createOrder(data: CheckoutFormValues) {
 			},
 		});
 
-		// TODO: сделать создание ссылки оплаты
+		// Создание платежа
+		const paymentData = await createPayment({
+			amount: order.totalAmount,
+			description: 'Оплатаа заказа #' + order.id,
+			orderId: order.id,
+		});
+
+		// Проверка на создание платежа
+		if (!paymentData) {
+			throw new Error('Payment data not found');
+		}
+
+		// Обновление статуса заказа
+		await prisma.order.update({
+			where: {
+				id: order.id,
+			},
+			data: {
+				paymentId: paymentData.id,
+			},
+		});
+
+		const paymentUrl = paymentData.confirmation.confirmation_url;
+		// Отправка письма
 
 		await sendEmail(
 			data.email,
@@ -83,27 +106,12 @@ export async function createOrder(data: CheckoutFormValues) {
 			PayOrderTemplate({
 				orderId: order.id,
 				totalAmount: order.totalAmount,
-				paymentUrl: 'https://www.youtube.com/',
+				paymentUrl,
 			})
 		);
+
+		return paymentUrl;
 	} catch (error) {
 		console.log('[ORDER_CREATE] Server error', error);
 	}
-	const token = '123';
-
-	await prisma.order.create({
-		data: {
-			token,
-			fullName: data.firstName + ' ' + data.lastName,
-			email: data.email,
-			phone: data.phone,
-			address: data.address,
-			comment: data.comment,
-			totalAmount: 1500,
-			status: OrderStatus.PENDING,
-			items: [],
-		},
-	});
-
-	return 'https://www.youtube.com/';
 }
