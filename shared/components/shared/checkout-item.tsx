@@ -29,7 +29,7 @@ export const CheckoutItem: React.FC<Props> = ({
 	return (
 		<div
 			className={cn(
-				'flex flex-item justify-between',
+				'flex items-center justify-between',
 				{
 					'opacity-50 pointer-events-none': disabled,
 				},
