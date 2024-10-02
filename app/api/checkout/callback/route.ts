@@ -1,5 +1,8 @@
 import { PaymentCallbackData } from '@/@types/yookassa';
 import { prisma } from '@/prisma/prisma-client';
+import { OrderSuccessTemplate } from '@/shared/components/shared/email-templates/order-success';
+import { sendEmail } from '@/shared/lib';
+import { CartItemDTO } from '@/shared/services/dto/cart.dto';
 import { OrderStatus } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -28,7 +31,16 @@ export async function POST(req: NextRequest) {
 			},
 		});
 
-		// const items = order?.items as unknown as CartItemDTO[];
+		const items = JSON.parse(order?.items as string) as CartItemDTO[];
+
+		await sendEmail(
+			order.email,
+			'Next Pizza / Ваш заказ успешно оплачен!',
+			OrderSuccessTemplate({
+				orderId: order.id,
+				items,
+			})
+		);
 	} catch (error) {
 		console.log('[CHECKOUT_CALLBACK] error', error);
 
