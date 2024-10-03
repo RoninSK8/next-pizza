@@ -22,18 +22,14 @@ export const Header: React.FC<Props> = ({
 	hasSearch = true,
 	hasCartButton = true,
 }) => {
-	const searchParams = new URLSearchParams(window.location.search);
 	useEffect(() => {
+		const searchParams = new URLSearchParams(window.location.search);
 		if (searchParams.has('paid')) {
 			toast.success('Заказ успешно оплачен!');
 			searchParams.delete('paid');
-			window.history.replaceState(
-				{},
-				'',
-				`${window.location.pathname}?${searchParams.toString()}`
-			);
+			window.history.replaceState({}, '', `${window.location.pathname}`);
 		}
-	}, [searchParams]);
+	}, []);
 
 	return (
 		<header className={cn('border-b', className)}>
