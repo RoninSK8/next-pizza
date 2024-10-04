@@ -1,3 +1,4 @@
+import { Providers } from './providers';
 import { WhiteBlock } from './white-block';
 import { Ingredient } from '@prisma/client';
 import { GroupVariants } from './group-variants';
@@ -32,6 +33,7 @@ export { RequiredSymbol } from './required-symbol';
 export { ErrorText } from './error-text';
 export { ClearButton } from './clear-button';
 export { AddressInput } from './address-input';
+export { Providers } from './providers';
 
 export * from './modals';
 export * from './form-components';
