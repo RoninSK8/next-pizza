@@ -1,3 +1,4 @@
+import { InfoBlock } from './info-block';
 import { Providers } from './providers';
 import { WhiteBlock } from './white-block';
 import { Ingredient } from '@prisma/client';
@@ -35,6 +36,7 @@ export { ClearButton } from './clear-button';
 export { AddressInput } from './address-input';
 export { Providers } from './providers';
 export { ProfileButton } from './profile-button';
+export { InfoBlock } from './info-block';
 
 export * from './modals';
 export * from './form-components';
