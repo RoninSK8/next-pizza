@@ -5,7 +5,6 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { User } from '@prisma/client';
-
 import { signOut } from 'next-auth/react';
 import { Container } from './container';
 import { Title } from './title';
@@ -16,6 +15,8 @@ import {
 	TFormRegisterValues,
 } from './modals/auth-modal/form/schemas';
 import { FormInput } from './form-components';
+import toast from 'react-hot-toast';
+import { updateUserInfo } from '@/app/actions';
 
 interface Props {
 	data: User;
@@ -32,7 +33,23 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
 		},
 	});
 
-	const onSubmit = async (data: TFormRegisterValues) => {};
+	const onSubmit = async (data: TFormRegisterValues) => {
+		try {
+			await updateUserInfo({
+				email: data.email,
+				fullName: data.fullName,
+				password: data.password,
+			});
+
+			toast.error('Данные обновлены 📝', {
+				icon: '✅',
+			});
+		} catch (error) {
+			return toast.error('Ошибка при обновлении данных', {
+				icon: '❌',
+			});
+		}
+	};
 
 	const onClickSignOut = () => {
 		signOut({
