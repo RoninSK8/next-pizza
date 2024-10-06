@@ -11,8 +11,8 @@ import { Title } from './title';
 
 import { Button } from '../ui';
 import {
-	formRegisterSchema,
-	TFormRegisterValues,
+	TUpdateProfileValues,
+	updateProfileSchema,
 } from './modals/auth-modal/form/schemas';
 import { FormInput } from './form-components';
 import toast from 'react-hot-toast';
@@ -24,7 +24,7 @@ interface Props {
 
 export const ProfileForm: React.FC<Props> = ({ data }) => {
 	const form = useForm({
-		resolver: zodResolver(formRegisterSchema),
+		resolver: zodResolver(updateProfileSchema),
 		defaultValues: {
 			fullName: data.fullName,
 			email: data.email,
@@ -33,7 +33,7 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
 		},
 	});
 
-	const onSubmit = async (data: TFormRegisterValues) => {
+	const onSubmit = async (data: TUpdateProfileValues) => {
 		try {
 			await updateUserInfo({
 				email: data.email,
@@ -73,17 +73,11 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
 					<FormInput name="email" label="E-Mail" required />
 					<FormInput name="fullName" label="Полное имя" required />
 
-					<FormInput
-						type="password"
-						name="password"
-						label="Новый пароль"
-						required
-					/>
+					<FormInput type="password" name="password" label="Новый пароль" />
 					<FormInput
 						type="password"
 						name="confirmPassword"
 						label="Повторите пароль"
-						required
 					/>
 
 					<Button
