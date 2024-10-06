@@ -1,3 +1,4 @@
+import { ProfileForm } from './profile-form';
 import { InfoBlock } from './info-block';
 import { Providers } from './providers';
 import { WhiteBlock } from './white-block';
@@ -37,6 +38,7 @@ export { AddressInput } from './address-input';
 export { Providers } from './providers';
 export { ProfileButton } from './profile-button';
 export { InfoBlock } from './info-block';
+export { ProfileForm } from './profile-form';
 
 export * from './modals';
 export * from './form-components';
