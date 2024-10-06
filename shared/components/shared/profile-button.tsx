@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '../ui';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { CircleUser, User } from 'lucide-react';
 
@@ -14,7 +14,8 @@ export const ProfileButton: React.FC<Props> = ({
 	className,
 	onClickSignIn,
 }) => {
-	const { data: session } = useSession();
+	const { data: session, status } = useSession();
+	console.log('Session', session, status);
 	return (
 		<div className={cn(className)}>
 			{!session ? (
