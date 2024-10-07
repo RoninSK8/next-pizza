@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 
 import { ProfileButton } from './profile-button';
 import { AuthModal } from './modals';
+import { useRouter } from 'next/navigation';
 
 interface Props {
 	hasSearch?: boolean;
@@ -22,15 +23,25 @@ export const Header: React.FC<Props> = ({
 	hasSearch = true,
 	hasCartButton = true,
 }) => {
+	const router = useRouter();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	useEffect(() => {
 		const searchParams = new URLSearchParams(window.location.search);
+		let toastMessage = '';
 		if (searchParams.has('paid')) {
-			toast.success('Заказ успешно оплачен!');
-			searchParams.delete('paid');
-			window.history.replaceState({}, '', `${window.location.pathname}`);
+			toastMessage = 'Заказ успешно оплачен!';
 		}
-	}, []);
+		if (searchParams.has('verified')) {
+			toastMessage = 'Аккаунт успешно подтверждён!';
+		}
+
+		if (toastMessage) {
+			router.replace('/');
+			setTimeout(() => {
+				toast.success(toastMessage, { duration: 5000 });
+			}, 500);
+		}
+	});
 
 	return (
 		<header className={cn('border-b', className)}>
