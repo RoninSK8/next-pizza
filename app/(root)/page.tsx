@@ -4,8 +4,8 @@ import {
 	ProductsGroupList,
 	Title,
 	TopBar,
+	Stories,
 } from '@/shared/components/shared';
-import { prisma } from '@/prisma/prisma-client';
 import { Suspense } from 'react';
 import { findPizzas, GetSearchParams } from '@/shared/lib/find-pizzas';
 
@@ -21,6 +21,8 @@ export default async function Home({
 			<Container className="mt-10">
 				<Title text="Все пиццы" size="lg" className="font-extrabold" />
 			</Container>
+			<Stories />
+
 			<TopBar
 				categories={categories.filter(
 					(category) => category.products.length > 0
