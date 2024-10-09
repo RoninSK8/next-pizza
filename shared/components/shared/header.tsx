@@ -36,10 +36,8 @@ export const Header: React.FC<Props> = ({
 		}
 
 		if (toastMessage) {
+			toast.success(toastMessage);
 			router.replace('/');
-			setTimeout(() => {
-				toast.success(toastMessage, { duration: 5000 });
-			}, 500);
 		}
 	});
 

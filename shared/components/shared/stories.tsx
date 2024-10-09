@@ -22,7 +22,7 @@ export const Stories: React.FC<Props> = ({ className }) => {
 			setStories(data);
 		}
 		fetchStories();
-	});
+	}, []);
 
 	const onClickStory = (story: IStory) => {
 		setSelectedStory(story);
