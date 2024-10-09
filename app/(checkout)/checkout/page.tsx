@@ -45,7 +45,7 @@ export default function CheckoutPage() {
 			form.setValue('lastName', lastName);
 			form.setValue('email', data.email);
 		}
-		if (session) {
+		if (session?.user) {
 			fetchUserInfo();
 		}
 	}, [form, session]);
