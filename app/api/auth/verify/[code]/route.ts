@@ -1,12 +1,17 @@
 import { prisma } from '@/prisma/prisma-client';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GET(
+	req: NextRequest,
+	{ params }: { params: { code: string } }
+) {
 	try {
-		const code = req.nextUrl.searchParams.get('code');
+		const code = params.code;
+
 		if (!code) {
 			return NextResponse.json({ error: 'Неверный код' }, { status: 400 });
 		}
+
 		const verificationCode = await prisma.verificationCode.findFirst({
 			where: {
 				code,
@@ -34,7 +39,10 @@ export async function GET(req: NextRequest) {
 
 		return NextResponse.redirect(new URL('/?verified', req.url));
 	} catch (error) {
-		console.error(error);
 		console.log('[VERIFY_GET] Server error', error);
+		return NextResponse.json(
+			{ error: 'Не удалось подтвердить почту' },
+			{ status: 500 }
+		);
 	}
 }

@@ -11,7 +11,7 @@ export const UserVerificattionTemplate: React.FC<Props> = ({ code }) => (
 		</p>
 		<hr />
 		<p>
-			<a href={`http://localhost:3000/api/auth/verify?code=${code}`}>
+			<a href={`http://localhost:3000/api/auth/verify/${code}`}>
 				Подтвердить регистрацию
 			</a>
 		</p>
