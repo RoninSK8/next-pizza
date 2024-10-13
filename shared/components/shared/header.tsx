@@ -27,18 +27,17 @@ export const Header: React.FC<Props> = ({
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	useEffect(() => {
 		const searchParams = new URLSearchParams(window.location.search);
-		let toastMessage = '';
 		if (searchParams.has('paid')) {
-			toastMessage = 'Заказ успешно оплачен!';
+			toast.success('Заказ успешно оплачен!');
 		}
 		if (searchParams.has('verified')) {
-			toastMessage = 'Аккаунт успешно подтверждён!';
+			toast.success('Аккаунт успешно подтверждён!');
+		}
+		if (searchParams.has('?verificationerror')) {
+			toast.error('Неверный код!');
 		}
 
-		if (toastMessage) {
-			toast.success(toastMessage);
-			router.replace('/');
-		}
+		router.replace('/');
 	});
 
 	return (
