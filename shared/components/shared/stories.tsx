@@ -1,11 +1,12 @@
 'use client';
 import { Api } from '@/shared/services/api-client';
 import { IStory } from '@/shared/services/stories';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Container } from './container';
 import { cn } from '@/shared/lib/utils';
 import { X } from 'lucide-react';
 import ReactStories from 'react-insta-stories';
+import { useClickAway } from 'react-use';
 
 interface Props {
 	className?: string;
@@ -15,6 +16,10 @@ export const Stories: React.FC<Props> = ({ className }) => {
 	const [stories, setStories] = React.useState<IStory[]>([]);
 	const [open, setOpen] = React.useState(false);
 	const [selectedStory, setSelectedStory] = React.useState<IStory>();
+	const ref = useRef(null);
+	useClickAway(ref, () => {
+		setOpen(false);
+	});
 
 	React.useEffect(() => {
 		async function fetchStories() {
@@ -55,12 +60,12 @@ export const Stories: React.FC<Props> = ({ className }) => {
 			))}
 			{open && (
 				<div className="absolute left-0 top-0 w-full h-full bg-black/80 flex items-center justify-center z-30">
-					<div className="relative" style={{ width: 520 }}>
+					<div ref={ref} className="relative" style={{ width: 520 }}>
 						<button
 							className="absolute -right-10 -top-5 z-30"
 							onClick={() => setOpen(false)}
 						>
-							<X className="absolute top-0 right-0 w-8 h-8 text-white/50" />
+							<X className="absolute top-5 right-0 w-8 h-8 text-white/50" />
 						</button>
 
 						<ReactStories
