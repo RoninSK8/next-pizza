@@ -29,15 +29,16 @@ export const Header: React.FC<Props> = ({
 		const searchParams = new URLSearchParams(window.location.search);
 		if (searchParams.has('paid')) {
 			toast.success('Заказ успешно оплачен!');
+			router.replace('/');
 		}
 		if (searchParams.has('verified')) {
 			toast.success('Аккаунт успешно подтверждён!');
+			router.replace('/');
 		}
 		if (searchParams.has('?verificationerror')) {
 			toast.error('Неверный код!');
+			router.replace('/');
 		}
-
-		router.replace('/');
 	});
 
 	return (
