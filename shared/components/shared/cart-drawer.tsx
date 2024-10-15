@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { Button } from '../ui';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { CartDrawerItem } from './cart-drawer-item';
-import { getCartItemDetails } from '@/shared/lib';
+import { getCartItemDetails, normalizeCountForm } from '@/shared/lib';
 import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
 import Image from 'next/image';
 import { Title } from './title';
@@ -49,7 +49,14 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
 						<SheetHeader>
 							<SheetTitle>
 								В корзине{' '}
-								<span className="font-bold">{items.length} товара</span>
+								<span className="font-bold">
+									{items.length}{' '}
+									{normalizeCountForm(items.length, [
+										'товар',
+										'товара',
+										'товаров',
+									])}
+								</span>
 							</SheetTitle>
 						</SheetHeader>
 					)}
