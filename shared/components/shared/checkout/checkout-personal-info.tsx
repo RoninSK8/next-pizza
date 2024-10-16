@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { lazy } from 'react';
 import { ErrorText, FormInput, WhiteBlock } from '..';
 import { Input } from '../../ui';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -14,28 +14,8 @@ export const CheckoutPersonalInfo: React.FC<Props> = ({ className }) => {
 
 	const mask = [
 		{
-			mask: '+{7}(#00)-000-00-00', // +79999999999
-			startsWith: '+',
+			mask: '+{7}(000)-000-00-00',
 			lazy: false,
-			definitions: {
-				'#': /[012345679]/,
-			},
-		},
-		{
-			mask: '+{7}(#00)-000-00-00', // +79999999999
-			startsWith: '7',
-			lazy: false,
-			definitions: {
-				'#': /[01234569]/,
-			},
-		},
-		{
-			mask: '+{7}(#00)-000-00-00', // 89999999999
-			startsWith: '8',
-			lazy: false,
-			definitions: {
-				'#': /[012345679]/,
-			},
 		},
 	];
 
