@@ -5,12 +5,15 @@ import { Input } from '../ui';
 import { RangeSlider } from './range-slider';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useIngredients, useFilters, useQueryFilters } from '@/shared/hooks';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Props {
 	className?: string;
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
+	const router = useRouter();
+
 	const { ingredients, loading } = useIngredients();
 	const filters = useFilters();
 
@@ -24,6 +27,15 @@ export const Filters: React.FC<Props> = ({ className }) => {
 	const updatePrices = (prices: number[]) => {
 		filters.setPrices('priceFrom', prices[0]);
 		filters.setPrices('priceTo', prices[1]);
+	};
+
+	const clearFilters = () => {
+		filters.setPizzaTypes;
+		filters.setSizes;
+		filters.setPrices('priceFrom', 0);
+		filters.setPrices('priceTo', 1000);
+		filters.setSelectedIngredients;
+		router.push(`/`, { scroll: false });
 	};
 
 	return (
@@ -102,6 +114,16 @@ export const Filters: React.FC<Props> = ({ className }) => {
 				onClickCkeckbox={filters.setSelectedIngredients}
 				selected={filters.selectedIngredients}
 			/>
+			{useSearchParams().size > 0 && (
+				<button
+					onClick={() => {
+						clearFilters();
+					}}
+					className="text-primary mt-3"
+				>
+					Очистить фильтры
+				</button>
+			)}
 		</div>
 	);
 };
