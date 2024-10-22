@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 export const useQueryFilters = (filters: Filters) => {
 	const isMounted = useRef(false);
 	const router = useRouter();
+	const debounceTimer = useRef<number | null>(null);
+
 	useEffect(() => {
 		if (isMounted.current) {
 			const params = {
@@ -19,7 +21,13 @@ export const useQueryFilters = (filters: Filters) => {
 				arrayFormat: 'comma',
 			});
 
-			router.push(`?${query}`, { scroll: false });
+			if (debounceTimer.current) {
+				window.clearTimeout(debounceTimer.current);
+			}
+
+			debounceTimer.current = window.setTimeout(() => {
+				router.push(`?${query}`, { scroll: false });
+			}, 200);
 		}
 		isMounted.current = true;
 	}, [filters, router]);
