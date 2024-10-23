@@ -15,7 +15,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
 	const router = useRouter();
 
 	const { ingredients, loading } = useIngredients();
+
 	const filters = useFilters();
+	console.log(filters);
 
 	useQueryFilters(filters);
 
@@ -30,11 +32,10 @@ export const Filters: React.FC<Props> = ({ className }) => {
 	};
 
 	const clearFilters = () => {
-		filters.setPizzaTypes;
-		filters.setSizes;
-		filters.setPrices('priceFrom', 0);
-		filters.setPrices('priceTo', 1000);
-		filters.setSelectedIngredients;
+		filters.resetPizzaTypes();
+		filters.resetIngredients();
+		filters.resetSizes();
+		filters.resetPrices();
 		router.push(`/`, { scroll: false });
 	};
 
@@ -115,12 +116,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
 				selected={filters.selectedIngredients}
 			/>
 			{useSearchParams().size > 0 && (
-				<button
-					onClick={() => {
-						clearFilters();
-					}}
-					className="text-primary mt-3"
-				>
+				<button onClick={clearFilters} className="text-primary mt-3">
 					Очистить фильтры
 				</button>
 			)}

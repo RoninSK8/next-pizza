@@ -26,6 +26,11 @@ interface ReturnProps extends Filters {
 	setPizzaTypes: (value: string) => void;
 	setSizes: (value: string) => void;
 	setSelectedIngredients: (value: string) => void;
+
+	resetSizes: () => void;
+	resetPizzaTypes: () => void;
+	resetIngredients: () => void;
+	resetPrices: () => void;
 }
 
 export const useFilters = (): ReturnProps => {
@@ -34,16 +39,18 @@ export const useFilters = (): ReturnProps => {
 		string
 	>;
 
-	const [selectedIngredients, { toggle: toggleIngredients }] = useSet(
+	const [
+		selectedIngredients,
+		{ toggle: toggleIngredients, reset: resetIngredients },
+	] = useSet(
 		new Set<string>(searchParams.get('ingredients')?.split(',') || [])
 	);
 
-	const [sizes, { toggle: toggleSizes }] = useSet(
+	const [sizes, { toggle: toggleSizes, reset: resetSizes }] = useSet(
 		new Set<string>(searchParams.get('sizes')?.split(',') || [])
 	);
-	const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(
-		new Set<string>(searchParams.get('pizzaTypes')?.split(',') || [])
-	);
+	const [pizzaTypes, { toggle: togglePizzaTypes, reset: resetPizzaTypes }] =
+		useSet(new Set<string>(searchParams.get('pizzaTypes')?.split(',') || []));
 
 	const [prices, setPrices] = useState<PriceProps>({
 		priceFrom: Number(searchParams.get('priceFrom')) || undefined,
@@ -52,6 +59,13 @@ export const useFilters = (): ReturnProps => {
 
 	const updatePrice = (name: keyof PriceProps, value: number) => {
 		setPrices((prev) => ({ ...prev, [name]: value }));
+	};
+
+	const resetPrices = () => {
+		setPrices({
+			priceFrom: undefined,
+			priceTo: undefined,
+		});
 	};
 
 	return useMemo(
@@ -64,7 +78,22 @@ export const useFilters = (): ReturnProps => {
 			setSelectedIngredients: toggleIngredients,
 			setSizes: toggleSizes,
 			setPizzaTypes: togglePizzaTypes,
+			resetPizzaTypes,
+			resetSizes,
+			resetIngredients,
+			resetPrices,
 		}),
-		[sizes, pizzaTypes, selectedIngredients, prices]
+		[
+			sizes,
+			pizzaTypes,
+			selectedIngredients,
+			prices,
+			toggleIngredients,
+			toggleSizes,
+			togglePizzaTypes,
+			resetPizzaTypes,
+			resetSizes,
+			resetIngredients,
+		]
 	);
 };
