@@ -1,11 +1,11 @@
 'use client';
 import { cn } from '@/shared/lib/utils';
-import { Title } from './title';
 import { Input } from '../ui';
 import { RangeSlider } from './range-slider';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useIngredients, useFilters, useQueryFilters } from '@/shared/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { SortPopup } from './sort-popup';
 
 interface Props {
 	className?: string;
@@ -13,11 +13,8 @@ interface Props {
 
 export const Filters: React.FC<Props> = ({ className }) => {
 	const router = useRouter();
-
 	const { ingredients, loading } = useIngredients();
-
 	const filters = useFilters();
-	console.log(filters);
 
 	useQueryFilters(filters);
 
@@ -41,8 +38,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
 
 	return (
 		<div className={cn(className)}>
-			<Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
-
+			<SortPopup />
 			<CheckboxFiltersGroup
 				className="mb-5"
 				title="Тип теста"

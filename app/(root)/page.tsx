@@ -2,7 +2,6 @@ import {
 	Container,
 	Filters,
 	ProductsGroupList,
-	Title,
 	TopBar,
 	Stories,
 } from '@/shared/components/shared';
@@ -18,13 +17,13 @@ export default async function Home({
 
 	return (
 		<>
-			<Stories />
-
 			<TopBar
 				categories={categories.filter(
 					(category) => category.products.length > 0
 				)}
 			/>
+			<Stories />
+
 			<Container className="mt-10 pb-14">
 				<div className="flex gap-[80px]">
 					{/* Фильтрация */}
