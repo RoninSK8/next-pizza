@@ -81,10 +81,10 @@ export default function CheckoutPage() {
 		updateItemQuantity(id, newQuantity);
 	};
 	return (
-		<Container>
+		<Container className="pt-6">
 			<Title
 				text="Оформление заказа"
-				className="font-extrabold mb-8 text-[36px]"
+				className="font-extrabold mb-8 text-3xl"
 			/>
 			<FormProvider {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)}>
