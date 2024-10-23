@@ -26,6 +26,11 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
 		React.useState(false);
 	const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
 
+	const productsTotalCount = items.reduce(
+		(acc, item) => acc + item.quantity,
+		0
+	);
+
 	const onClickCountButton = (
 		id: number,
 		quantity: number,
@@ -50,8 +55,8 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
 							<SheetTitle>
 								В корзине{' '}
 								<span className="font-bold">
-									{items.length}{' '}
-									{normalizeCountForm(items.length, [
+									{productsTotalCount}{' '}
+									{normalizeCountForm(productsTotalCount, [
 										'товар',
 										'товара',
 										'товаров',
