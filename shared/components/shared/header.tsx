@@ -14,15 +14,10 @@ import { useRouter } from 'next/navigation';
 
 interface Props {
 	hasSearch?: boolean;
-	hasCartButton?: boolean;
 	className?: string;
 }
 
-export const Header: React.FC<Props> = ({
-	className,
-	hasSearch = true,
-	hasCartButton = true,
-}) => {
+export const Header: React.FC<Props> = ({ className, hasSearch = true }) => {
 	const router = useRouter();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	useEffect(() => {
@@ -67,7 +62,6 @@ export const Header: React.FC<Props> = ({
 				<div className="flex items-center gap-3">
 					<AuthModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
 					<ProfileButton onClickSignIn={() => setIsModalOpen(true)} />
-					{hasCartButton && <CartButton />}
 				</div>
 			</Container>
 		</header>
