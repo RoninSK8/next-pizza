@@ -6,6 +6,7 @@ import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useIngredients, useFilters, useQueryFilters } from '@/shared/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { SortPopup } from './sort-popup';
+import { SortOption } from '@/shared/hooks/use-filters';
 
 interface Props {
 	className?: string;
@@ -28,17 +29,29 @@ export const Filters: React.FC<Props> = ({ className }) => {
 		filters.setPrices('priceTo', prices[1]);
 	};
 
+	const updateSortingOption = (value: SortOption) => {
+		filters.setSort(value);
+	};
+
 	const clearFilters = () => {
 		filters.resetPizzaTypes();
 		filters.resetIngredients();
 		filters.resetSizes();
 		filters.resetPrices();
+		filters.resetSort();
 		router.push(`/`, { scroll: false });
 	};
 
 	return (
 		<div className={cn(className)}>
-			<SortPopup />
+			<SortPopup
+				onClickSortingOption={updateSortingOption}
+				selected={filters.sort}
+				items={[
+					{ text: 'Сначала недорогие', value: 'priceAsc' },
+					{ text: 'Сначала дорогие', value: 'priceDesc' },
+				]}
+			/>
 			<CheckboxFiltersGroup
 				className="mb-5"
 				title="Тип теста"
