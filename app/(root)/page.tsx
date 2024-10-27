@@ -15,6 +15,10 @@ export default async function Home({
 }) {
 	const categories = await findPizzas(searchParams);
 
+	const hasProducts = categories.some(
+		(category) => category.products.length > 0
+	);
+
 	return (
 		<>
 			<TopBar
@@ -35,16 +39,22 @@ export default async function Home({
 					{/* Список товаров */}
 					<div className="flex-1">
 						<div className="flex flex-col gap-16">
-							{categories.map(
-								(category) =>
-									category.products.length > 0 && (
-										<ProductsGroupList
-											key={category.id}
-											title={category.name}
-											categoryId={category.id}
-											items={category.products}
-										/>
-									)
+							{hasProducts ? (
+								categories.map(
+									(category) =>
+										category.products.length > 0 && (
+											<ProductsGroupList
+												key={category.id}
+												title={category.name}
+												categoryId={category.id}
+												items={category.products}
+											/>
+										)
+								)
+							) : (
+								<div className="text-left text-xl m-[30px]">
+									Не удалось найти товары по заданным фильтрам.
+								</div>
 							)}
 						</div>
 					</div>
