@@ -3,7 +3,12 @@ import { cn } from '@/shared/lib/utils';
 import { Input } from '../ui';
 import { RangeSlider } from './range-slider';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
-import { useIngredients, useFilters, useQueryFilters } from '@/shared/hooks';
+import {
+	useIngredients,
+	useFilters,
+	useQueryFilters,
+	useMinAndMaxPrices,
+} from '@/shared/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { SortPopup } from './sort-popup';
 import { SortOption } from '@/shared/hooks/use-filters';
@@ -16,6 +21,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
 	const router = useRouter();
 	const { ingredients, loading } = useIngredients();
 	const filters = useFilters();
+	const { minMaxprices, minMaxPricesLoading } = useMinAndMaxPrices();
+	console.log('minMaxprices', minMaxprices);
 
 	useQueryFilters(filters);
 
@@ -82,9 +89,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
 				<div className="flex gap-3 mb-5">
 					<Input
 						type="number"
-						placeholder="0"
-						min={0}
-						max={1000}
+						placeholder={String(minMaxprices.minPrice)}
+						min={minMaxprices.minPrice}
+						max={minMaxprices.maxPrice}
 						value={String(filters.prices.priceFrom) || '0'}
 						onChange={(e) =>
 							filters.setPrices('priceFrom', Number(e.target.value))
@@ -92,9 +99,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
 					/>
 					<Input
 						type="number"
-						min={100}
-						max={1000}
-						placeholder="1000"
+						min={minMaxprices.minPrice}
+						max={minMaxprices.maxPrice}
+						placeholder={String(minMaxprices.maxPrice)}
 						value={String(filters.prices.priceTo) || '1000'}
 						onChange={(e) =>
 							filters.setPrices('priceTo', Number(e.target.value))
@@ -102,8 +109,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
 					/>
 				</div>
 				<RangeSlider
-					min={0}
-					max={1000}
+					min={minMaxprices.minPrice}
+					max={minMaxprices.maxPrice}
 					step={10}
 					value={[
 						filters.prices.priceFrom || 0,
