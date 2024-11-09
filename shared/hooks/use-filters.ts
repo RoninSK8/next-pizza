@@ -1,6 +1,6 @@
 import { useSearchParams } from 'next/navigation';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useSet } from 'react-use';
 
 interface PriceProps {
@@ -37,6 +37,8 @@ interface ReturnProps extends Filters {
 	resetIngredients: () => void;
 	resetPrices: () => void;
 	resetSort: () => void;
+
+	resetAllFilters: () => void;
 }
 
 export const useFilters = (): ReturnProps => {
@@ -67,20 +69,28 @@ export const useFilters = (): ReturnProps => {
 		searchParams.get('sort') || undefined
 	);
 
-	const resetSort = () => {
+	const resetSort = useCallback(() => {
 		setSort(undefined);
-	};
+	}, [setSort]);
 
 	const updatePrice = (name: keyof PriceProps, value: number) => {
 		setPrices((prev) => ({ ...prev, [name]: value }));
 	};
 
-	const resetPrices = () => {
+	const resetPrices = useCallback(() => {
 		setPrices({
 			priceFrom: undefined,
 			priceTo: undefined,
 		});
-	};
+	}, [setPrices]);
+
+	const resetAllFilters = useCallback(() => {
+		resetPrices();
+		resetSizes();
+		resetSort();
+		resetPizzaTypes();
+		resetIngredients();
+	}, [resetPrices, resetSizes, resetSort, resetPizzaTypes, resetIngredients]);
 
 	return useMemo(
 		() => ({
@@ -99,6 +109,7 @@ export const useFilters = (): ReturnProps => {
 			resetSizes,
 			resetIngredients,
 			resetPrices,
+			resetAllFilters,
 		}),
 		[
 			sizes,
@@ -109,10 +120,12 @@ export const useFilters = (): ReturnProps => {
 			toggleIngredients,
 			toggleSizes,
 			togglePizzaTypes,
-			setSort,
+			resetSort,
 			resetPizzaTypes,
 			resetSizes,
 			resetIngredients,
+			resetPrices,
+			resetAllFilters,
 		]
 	);
 };

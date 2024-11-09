@@ -41,11 +41,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
 	};
 
 	const clearFilters = () => {
-		filters.resetPizzaTypes();
-		filters.resetIngredients();
-		filters.resetSizes();
-		filters.resetPrices();
-		filters.resetSort();
+		filters.resetAllFilters();
+
 		router.push(`/`, { scroll: false });
 	};
 
