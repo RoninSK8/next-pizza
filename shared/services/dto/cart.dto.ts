@@ -1,4 +1,3 @@
-import { pizzaSizes } from '@/shared/constants/pizza';
 import {
 	Cart,
 	CartItem,

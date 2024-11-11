@@ -1,8 +1,5 @@
-import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
-import { getCartItemDetails } from '@/shared/lib';
 import { capitalizeLowercaseText } from '@/shared/lib/capitalize-lowercase-text';
 import { cn } from '@/shared/lib/utils';
-import { Ingredient } from '@prisma/client';
 
 interface Props {
 	name: string;

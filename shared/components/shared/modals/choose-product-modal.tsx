@@ -5,11 +5,7 @@ import { cn } from '@/shared/lib/utils';
 import { Dialog } from '@/shared/components/ui';
 import { DialogContent } from '@/shared/components/ui/dialog';
 import { useRouter } from 'next/navigation';
-
 import { ProductWithRelations } from '@/@types/prisma';
-
-import { useCartStore } from '@/shared/store';
-import toast from 'react-hot-toast';
 import { ProductForm } from '../product-form';
 
 interface Props {

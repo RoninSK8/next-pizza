@@ -1,10 +1,3 @@
-import { ProfileForm } from './profile-form';
-import { InfoBlock } from './info-block';
-import { Providers } from './providers';
-import { WhiteBlock } from './white-block';
-import { Ingredient } from '@prisma/client';
-import { GroupVariants } from './group-variants';
-import { PizzaImage } from '@/shared/components/shared/pizza-image';
 export { Container } from './container';
 export { Header } from './header';
 export { Title } from './title';

@@ -1,4 +1,3 @@
-import { prisma } from '@/prisma/prisma-client';
 import { useEffect, useState } from 'react';
 import { Api } from '../services/api-client';
 import { MinMaxPrices } from '../services/prices';

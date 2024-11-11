@@ -1,11 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { cn } from '@/shared/lib/utils';
 import { Container } from './container';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SearchInput } from './search-input';
-import { CartButton } from './cart-button';
 import toast from 'react-hot-toast';
 
 import { ProfileButton } from './profile-button';

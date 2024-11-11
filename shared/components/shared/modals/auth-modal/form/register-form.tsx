@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormInput, Title } from '../../..';
 import { Button } from '@/shared/components/ui';
 import toast from 'react-hot-toast';
-import { signIn } from 'next-auth/react';
 import { registerUser } from '@/app/actions';
 
 interface Props {

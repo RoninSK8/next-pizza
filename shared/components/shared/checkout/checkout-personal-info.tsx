@@ -1,9 +1,8 @@
 'use client';
-import React, { lazy } from 'react';
+import React from 'react';
 import { ErrorText, FormInput, WhiteBlock } from '..';
-import { Input } from '../../ui';
 import { Controller, useFormContext } from 'react-hook-form';
-import { IMaskInput, IMaskMixin, useIMask } from 'react-imask';
+import { IMaskInput } from 'react-imask';
 
 interface Props {
 	className?: string;

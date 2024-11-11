@@ -22,7 +22,6 @@ export const Filters: React.FC<Props> = ({ className }) => {
 	const { ingredients, loading } = useIngredients();
 	const filters = useFilters();
 	const { minMaxprices, minMaxPricesLoading } = useMinAndMaxPrices();
-	console.log('minMaxprices', minMaxprices);
 
 	useQueryFilters(filters);
 

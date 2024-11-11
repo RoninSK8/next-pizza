@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { X } from 'lucide-react';
 import { Textarea } from '@/shared/components/ui/textarea';
 import { ClearButton } from '../clear-button';
 
