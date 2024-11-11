@@ -131,7 +131,7 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
 			},
 		});
 
-		await prisma.user.update({
+		const user = await prisma.user.update({
 			where: {
 				id: Number(currentUser.id),
 			},
