@@ -8,7 +8,7 @@
 
 ![Next_Pizza_screen](https://github.com/user-attachments/assets/b88eb831-4e38-4897-8b75-77b7747ab003)
 
-### [Ссылка на проект](https://pizza-react-redux-ts.vercel.app)
+### [Ссылка на проект](https://next-pizza-iota-eight.vercel.app)
 
 ## Стек и библиотеки:
 
